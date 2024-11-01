@@ -17,7 +17,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-white border-b">
+    <nav className="bg-white border-b mx-10">
       <div className="max-w-7xl container mx-auto ">
         <div className="flex justify-between items-center h-16">
           {/* Left side - Logo */}
