@@ -1,3 +1,5 @@
+import DoctorList from "@/components/doctorlist";
+import Footer from "@/components/Footer";
 import HeroSection from "@/components/HeroSection";
 import MedicalService from "@/components/MedicalService";
 import Navbar from "@/components/Navbar";
@@ -8,7 +10,8 @@ export default function Home() {
     <div>
       <HeroSection />
       <MedicalService/>
-      <h1 className="text-3xl">Patient Appointment System</h1>
+      <DoctorList/>
+      <Footer/>
     </div>
   );
 }

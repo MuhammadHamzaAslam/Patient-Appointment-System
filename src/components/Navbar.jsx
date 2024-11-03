@@ -70,7 +70,7 @@ const Navbar = () => {
       </div>
 
       {/* Drawer for mobile menu */}
-      <Drawer
+      <Drawer 
         title={
           <span className="text-[#0D6DB7] font-bold">
             {" "}

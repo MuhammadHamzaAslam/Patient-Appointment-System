@@ -1,41 +1,7 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { Bone, Brain, Ear, Heart, Stethoscope } from "lucide-react";
-import { FaVirus } from "react-icons/fa";
+import { services } from "@/lib/services";
 
 export default function MedicalService() {
-  const services = [
-    {
-      icon: Stethoscope,
-      name: "Dentistry",
-      color: "text-blue-500",
-    },
-    {
-      icon: Heart,
-      name: "Cardiology",
-      color: "text-blue-500",
-    },
-    {
-      icon: Ear,
-      name: "ENT Specialists",
-      color: "text-blue-500",
-    },
-    {
-      icon: Bone,
-      name: "Astrology",
-      color: "text-blue-500",
-    },
-    {
-      icon: Brain,
-      name: "Neuroanatomy",
-      color: "text-blue-500",
-    },
-    {
-      icon: FaVirus ,
-      name: "Blood Screening",
-      color: "text-blue-500",
-    },
-  ];
-
   return (
     <section className="py-12 px-4 md:py-24">
       <div className="container mx-auto max-w-6xl">
