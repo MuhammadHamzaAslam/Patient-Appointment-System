@@ -1,115 +1,100 @@
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
-import {
-  FaFacebook,
-  FaGlobe,
-  FaHeart,
-  FaInstagram,
-  FaTwitter,
-} from "react-icons/fa";
+import Link from "next/link"
+import { FaFacebook, FaHeart, FaInstagram, FaTwitter } from "react-icons/fa"
 
 export default function Footer() {
   return (
-    <footer className="bg-gray-950 text-gray-300 py-12">
+    <footer
+      className="relative w-full py-12 bg-cover bg-center bg-no-repeat bg-[url(https://preview.colorlib.com/theme/mediplus/images/footer-bg.jpg)]"
+      style={{
+        backgroundImage: 'url("https://preview.colorlib.com/theme/mediplus/images/footer-bg.jpg")',
+      }}
+    >
+
+      <div className="absolute inset-0 bg-[#21202021]"></div>
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-          {/* Logo Section */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {/* Mediplus Column */}
           <div>
-            <Link href={"/"}>
-              <h1>
-                <img
-                  src="https://preview.colorlib.com/theme/medicalcenter/assets/img/logo/logo2_footer.png"
-                  alt="logo"
-                  className="mt-3"
-                />
-              </h1>
-            </Link>
+            <h2 className="text-xl font-bold mb-4">Mediplus</h2>
+            <p className="text-black mb-4">
+              Far far away, behind the word mountains, far from the countries.
+            </p>
+            <div className="flex space-x-4">
+              <Link href="#" className="text-2xl bg-black px-2 py-2 rounded-full">
+                <FaTwitter className="text-md text-white" />
+                <span className="sr-only">Twitter</span>
+              </Link>
+              <Link href="#" className="text-2xl bg-black px-2 py-2 rounded-full">
+                <FaFacebook className="text-md text-white" />
+                <span className="sr-only">Facebook</span>
+              </Link>
+              <Link href="#" className="text-2xl bg-black px-2 py-2 rounded-full">
+                <FaInstagram className="text-md text-white" />
+                <span className="sr-only">Instagram</span>
+              </Link>
+            </div>
           </div>
 
-          {/* About Section */}
-          <div className="space-y-4">
-            <h3 className="text-xl font-semibold text-white">ABOUT US</h3>
-            <p className="text-gray-400">
-              Lorem igpsum doldfor sit amet, adipiscing elit, sed do eiusmod
-              tempor cergelit rgh.
-            </p>
-            <p className="text-gray-400">
-              Lorem ipsum dolor sit amet, adipiscing elit.
-            </p>
+          {/* Departments Column */}
+          <div>
+            <h2 className="text-xl font-bold mb-4">Departments</h2>
+            <ul className="space-y-2">
+              {['Neurology', 'Ophthalmology', 'Nuclear Magnetic', 'Surgical', 'Cardiology', 'Dental'].map((dept) => (
+                <li key={dept}>
+                  <Link href="#" className="text-black cursor-pointer hover:text-primary">
+                    → {dept}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
 
-          {/* Contact Section */}
-          <div className="space-y-4">
-            <div>
-              <span className="text-white">+564</span>{" "}
-              <span className="text-blue-500">7885 3222</span>
-            </div>
-            <div>
-              <a
-                href="mailto:youremail@gmail.com"
-                className="text-gray-400 hover:text-blue-500 transition-colors"
-              >
-                youremail@gmail.com
-              </a>
-            </div>
-            <div className="flex gap-2">
-              <Input
-                type="email"
-                placeholder="Email Address"
-                className="bg-gray-900 border-gray-800 text-gray-300"
-              />
-              <Button
-                variant="ghost"
-                className="text-blue-500 hover:text-blue-400"
-              >
-                Send
-              </Button>
-            </div>
+
+
+          {/* Services Column */}
+          <div>
+            <h2 className="text-xl font-bold mb-4">Services</h2>
+            <ul className="space-y-2">
+              {['Emergency Services', 'Qualified Doctors', 'Outdoors Checkup', '24 Hours Services'].map((service) => (
+                <li key={service}>
+                  <Link href="#" className="text-black cursor-pointer hover:text-primary">
+                    → {service}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Contact Column */}
+          <div>
+            <h2 className="text-xl font-bold mb-4">Have a Questions?</h2>
+            <address className="text-[#000] cursor-pointer hover:text-primary">
+              <p>203 Fake St. Mountain View, San Francisco, California, USA</p>
+              <p>
+                <Link href="tel:+23923929210" className="text-black cursor-pointer hover:text-primary">
+                  +2 392 3929 210
+                </Link>
+              </p>
+              <p>
+                <Link href="mailto:info@yourdomain.com" className="text-black cursor-pointer hover:text-primary">
+                  info@yourdomain.com
+                </Link>
+              </p>
+            </address>
           </div>
         </div>
 
-        {/* Bottom Section */}
-        <div className="mt-12 pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center gap-4">
-          <div className="text-gray-400 text-sm">
-            Copyright ©2024 All rights reserved | This template is made with{" "}
-            <FaHeart className="w-4 h-4 inline-block text-red-500 mx-1" /> by{" "}
-            <a href="#" className="text-blue-500 hover:text-blue-400">
-              Colorlib
-            </a>
-          </div>
-          <div className="flex gap-6">
-            <Link
-              href="#"
-              className="text-gray-400 hover:text-blue-500 transition-colors"
-            >
-              <FaTwitter className="w-5 h-5" />
-              <span className="sr-only">Twitter</span>
+        <div className="mt-12 pt-8 border-t border-muted text-center text-sm  flex flex-col items-center">
+          <p className="flex items-center space-x-1">
+            <span >Copyright ©2024 All rights reserved | This Project is made with</span>
+            <FaHeart className="text-red-500" aria-label="love" />
+            <span>by</span>
+            <Link href="https://github.com/MuhammadHamzaAslam" className="cursor-pointer text-black font-bold">
+              Muhammad Hamza
             </Link>
-            <Link
-              href="#"
-              className="text-gray-400 hover:text-blue-500 transition-colors"
-            >
-                <FaFacebook className="w-5 h-5" />
-                <span className="sr-only">Facebook</span>
-            </Link>
-            <Link
-              href="#"
-              className="text-gray-400 hover:text-blue-500 transition-colors"
-            >
-              <FaGlobe className="w-5 h-5" />
-              <span className="sr-only">Website</span>
-            </Link>
-            <Link
-              href="#"
-              className="text-gray-400 hover:text-blue-500 transition-colors"
-            >
-              <FaInstagram className="w-5 h-5" />
-              <span className="sr-only">Instagram</span>
-            </Link>
-          </div>
+          </p>
         </div>
       </div>
     </footer>
-  );
+  )
 }

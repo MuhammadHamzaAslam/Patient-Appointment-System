@@ -10,7 +10,8 @@ import {
 import { specialists } from "@/lib/specialist";
 import { Button } from "./ui/button";
 
-export default function DoctorList() {
+export default function DoctorList({ isHome }) {
+  const filtered = isHome ? specialists.slice(0, 3) : specialists
   return (
     <section className="py-12 px-4 md:py-24 bg-gray-50">
       <div className="container mx-auto max-w-6xl">
@@ -24,19 +25,22 @@ export default function DoctorList() {
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900">
             Our Specialist
           </h2>
-          <Link href={"/doctors"}>
-            <Button>See All</Button>
-          </Link>
+          {
+            isHome ?
+              <Link href={"/doctors"}>
+                <Button>See All</Button>
+              </Link> : null
+          }
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-          {specialists.map((specialist, index) => (
+          {filtered.map((specialist, index) => (
             <Card
               key={index}
               className="overflow-hidden rounded-lg shadow-lg border border-gray-200 hover:shadow-2xl transition-all duration-300 bg-white"
             >
               <div className="relative">
-                <Image
+                <img
                   src={specialist.image}
                   alt={specialist.name}
                   width={300}
@@ -79,7 +83,10 @@ export default function DoctorList() {
                 </div>
               </CardContent>
             </Card>
-          ))}
+
+          ))
+
+          }
         </div>
       </div>
     </section>

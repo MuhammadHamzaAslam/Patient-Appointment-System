@@ -10,7 +10,7 @@ export default function Home() {
     <div>
       <HeroSection />
       <MedicalService/>
-      <DoctorList/>
+      <DoctorList isHome={true} />
       <Footer/>
     </div>
   );

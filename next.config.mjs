@@ -5,6 +5,9 @@ const nextConfig = {
       {
         hostname: "preview.colorlib.com",
       },
+      {
+        hostname: "images.unsplash.com",
+      },
     ],
   },
 };
