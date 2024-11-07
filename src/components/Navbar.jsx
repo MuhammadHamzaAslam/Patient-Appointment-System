@@ -48,7 +48,7 @@ const Navbar = () => {
 
           <div className="hidden md:flex space-x-8">
             <Link href={""}>
-              <Button variant={"outline"}>ADD</Button>
+              <Button>Login</Button>
             </Link>
           </div>
 
@@ -70,17 +70,26 @@ const Navbar = () => {
       </div>
 
       {/* Drawer for mobile menu */}
-      <Drawer 
+      <Drawer
         title={
           <span className="text-[#0D6DB7] font-bold">
             {" "}
-            Allama Faheem Ashraf
+            Patient App
           </span>
         }
         placement="right"
         onClose={closeDrawer}
         visible={drawerVisible}
       >
+        <Link href={"/"}>
+          <h1>
+            <img
+              src="https://preview.colorlib.com/theme/medicalcenter/assets/img/logo/logo.png"
+              alt="logo"
+              className="my-3 h-6"
+            />
+          </h1>
+        </Link>
         <Link href={"/"} className="nav-item text-[#8DC63F] block mb-3">
           Home
         </Link>
@@ -91,7 +100,7 @@ const Navbar = () => {
           Contact Us
         </Link>
         <Link href={""}>
-          <Button>ADD</Button>
+          <Button>Login</Button>
         </Link>
       </Drawer>
     </nav>
