@@ -16,10 +16,12 @@ export async function POST(request) {
     let obj = await request.json();
     let newUser = await new UserModal({ ...obj });
     newUser = await newUser.save();
-    return Response.json({
-      ...newUser,
-      mssg: "User Added",
-    });
+    return Response.json(
+      JSON.stringify({
+        ...newUser,
+        mssg: "User Added",
+      })
+    );
   } catch (error) {
     console.log(error);
   }
