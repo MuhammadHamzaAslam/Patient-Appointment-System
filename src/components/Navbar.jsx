@@ -15,6 +15,7 @@ const Navbar = () => {
   const closeDrawer = () => {
     setDrawerVisible(false);
   };
+  
 
   return (
     <nav className="bg-white border-b mx-10">
@@ -47,7 +48,7 @@ const Navbar = () => {
           </div>
 
           <div className="hidden md:flex space-x-8">
-            <Link href={""}>
+            <Link href={"/login"}>
               <Button>Login</Button>
             </Link>
           </div>
@@ -99,7 +100,7 @@ const Navbar = () => {
         <Link href={"/contact"} className="nav-item text-[#0D6DB7] block mb-3">
           Contact Us
         </Link>
-        <Link href={""}>
+        <Link href={"/login"}>
           <Button>Login</Button>
         </Link>
       </Drawer>
