@@ -17,10 +17,12 @@ export async function POST(request) {
     let newUser = await new UserModal({ ...obj });
     newUser = await newUser.save();
     return Response.json(
-      JSON.stringify({
-        ...newUser,
-        mssg: "User Added",
-      })
+      {
+        error: false,
+        msg: "User Registered Successfully",
+        user: newUser,
+      },
+      { status: 201 }
     );
   } catch (error) {
     console.log(error);

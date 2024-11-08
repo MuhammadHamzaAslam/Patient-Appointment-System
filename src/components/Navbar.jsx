@@ -1,111 +1,76 @@
-"use client";
-import React, { useState } from "react";
-import { Drawer } from "antd";
-import { FaBars, FaTimes } from "react-icons/fa";
-import "antd/dist/reset.css";
+import React from "react";
+import { FaSignOutAlt } from "react-icons/fa";
 import Link from "next/link";
 import { Button } from "./ui/button";
-const Navbar = () => {
-  const [drawerVisible, setDrawerVisible] = useState(false);
+import { auth, signOut } from "../../auth";
+import {
+  Menubar,
+  MenubarContent,
+  MenubarItem,
+  MenubarMenu,
+  MenubarSeparator,
+  MenubarTrigger,
+} from "@/components/ui/menubar";
+import Image from "next/image";
 
-  const showDrawer = () => {
-    setDrawerVisible(true);
-  };
-
-  const closeDrawer = () => {
-    setDrawerVisible(false);
-  };
-  
-
+export default async function Navbar() {
+  const session = await auth();
   return (
-    <nav className="bg-white border-b mx-10">
-      <div className="max-w-7xl container mx-auto ">
-        <div className="flex justify-between items-center h-16">
-          {/* Left side - Logo */}
-          <div className="flex-shrink-0">
-            <Link href={"/"}>
-              <h1>
-                <img
-                  src="https://preview.colorlib.com/theme/medicalcenter/assets/img/logo/logo.png"
-                  alt="logo"
-                  className="mt-3"
-                />
-              </h1>
-            </Link>
-          </div>
-
-          {/* Right side - Menu for large screens */}
-          <div className="hidden md:flex space-x-8">
-            <Link href={"/"} className="nav-item text-[#8DC63F] text-lg">
-              Home
-            </Link>
-            <Link href={"/about"} className="nav-item text-[#0D6DB7] text-lg">
-              About
-            </Link>
-            <Link href={"/contact"} className="nav-item text-[#0D6DB7] text-lg">
-              Contact Us
-            </Link>
-          </div>
-
-          <div className="hidden md:flex space-x-8">
-            <Link href={"/login"}>
-              <Button>Login</Button>
-            </Link>
-          </div>
-
-          {/* Hamburger Menu for small/medium screens */}
-          <div className="md:hidden flex items-center">
-            {drawerVisible ? (
-              <FaTimes
-                className="text-2xl cursor-pointer"
-                onClick={closeDrawer}
-              />
-            ) : (
-              <FaBars
-                className="text-2xl cursor-pointer"
-                onClick={showDrawer}
-              />
-            )}
-          </div>
-        </div>
-      </div>
-
-      {/* Drawer for mobile menu */}
-      <Drawer
-        title={
-          <span className="text-[#0D6DB7] font-bold">
-            {" "}
-            Patient App
-          </span>
-        }
-        placement="right"
-        onClose={closeDrawer}
-        visible={drawerVisible}
-      >
-        <Link href={"/"}>
-          <h1>
+    <nav className="bg-white shadow-md border-b">
+      <div className="container mx-auto flex justify-between items-center py-4 px-5">
+        {/* Logo Section */}
+        <div className="flex items-center space-x-3">
+          <Link href={"/"}>
             <img
               src="https://preview.colorlib.com/theme/medicalcenter/assets/img/logo/logo.png"
-              alt="logo"
-              className="my-3 h-6"
+              alt="Logo"
+              className="cursor-pointer"
             />
-          </h1>
-        </Link>
-        <Link href={"/"} className="nav-item text-[#8DC63F] block mb-3">
-          Home
-        </Link>
-        <Link href={"/about"} className="nav-item text-[#0D6DB7] block mb-3">
-          About
-        </Link>
-        <Link href={"/contact"} className="nav-item text-[#0D6DB7] block mb-3">
-          Contact Us
-        </Link>
-        <Link href={"/login"}>
-          <Button>Login</Button>
-        </Link>
-      </Drawer>
+          </Link>
+        </div>
+
+        {/* Right Section - Login Button or User Menu */}
+        <div className="flex items-center space-x-6">
+          {!session ? (
+            <Link href={"/login"}>
+              <Button className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">
+                Login
+              </Button>
+            </Link>
+          ) : (
+            <Menubar>
+              <MenubarMenu>
+                <MenubarTrigger className="flex items-center space-x-2 cursor-pointer">
+                  <img
+                    src={session?.user?.image}
+                    alt="Your Pic"
+                    className="rounded-full h-9 "
+                  />
+                </MenubarTrigger>
+                <MenubarContent className="bg-white border rounded-lg shadow-lg mt-2">
+                  <Link href={"/profile"}>
+                    <MenubarItem className="hover:bg-gray-100 px-4 py-2">Your Profile</MenubarItem>
+                  </Link>
+                  <MenubarSeparator />
+                  <Link href={"/appointments"}>
+                    <MenubarItem className="hover:bg-gray-100 px-4 py-2">Your Appointments</MenubarItem>
+                  </Link>
+                  <MenubarSeparator />
+
+                  <form
+                    action={async () => {
+                      "use server";
+                      await signOut("google");
+                    }}
+                  >
+                    <Button variant={"outline"}>Logout</Button>
+                  </form>
+                </MenubarContent>
+              </MenubarMenu>
+            </Menubar>
+          )}
+        </div>
+      </div>
     </nav>
   );
-};
-
-export default Navbar;
+}
