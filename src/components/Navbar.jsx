@@ -20,7 +20,7 @@ export default async function Navbar() {
 
   return (
     <nav className="bg-white shadow-md border-b">
-      <div className="container mx-auto flex justify-between items-center py-3 px-5">
+      <div className="container mx-auto flex justify-between items-center py-3 ">
         {/* Logo Section */}
         <div className="flex items-center space-x-3">
           <Link href={"/"}>
