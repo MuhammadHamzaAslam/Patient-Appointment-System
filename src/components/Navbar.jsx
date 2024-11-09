@@ -14,10 +14,13 @@ import {
 import Image from "next/image";
 
 export default async function Navbar() {
-  const session = await auth();
+  const session = await auth(); 
+  console.log('session =>' ,session);
+
+
   return (
     <nav className="bg-white shadow-md border-b">
-      <div className="container mx-auto flex justify-between items-center py-4 px-5">
+      <div className="container mx-auto flex justify-between items-center py-3 px-5">
         {/* Logo Section */}
         <div className="flex items-center space-x-3">
           <Link href={"/"}>
