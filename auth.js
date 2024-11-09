@@ -20,7 +20,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     async signIn({ account, profile }) {
       if (account.provider === "google") {
         // console.log("account =>" , account);
-        console.log("profile =>", profile);
+        // console.log("profile =>", profile);
         let obj = {
           firstName: profile.given_name,
           lastName: profile.family_name,
@@ -28,7 +28,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           picture: profile.picture,
         };
         const user = await HandleLogin(obj);
-        return user; // Do different verification for other providers that don't have `email_verified`
+        return {user}; // Do different verification for other providers that don't have `email_verified`
       }
     },
     async jwt({ token }) {
