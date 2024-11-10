@@ -26,7 +26,7 @@ const FormSchema = z.object({
   number: z.string().regex(/^\d+$/, "Enter a valid phone number"),
   address: z.string().min(5),
 });
-export default  async function ApplyForm() {
+export default function ApplyForm() {
   const form = useForm({
     resolver: zodResolver(FormSchema),
     defaultValues: {
