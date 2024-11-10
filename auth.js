@@ -11,7 +11,7 @@ async function HandleLogin(obj) {
   } else {
     let newUser = await UserModal(obj);
     newUser = newUser.save();
-    return newUser
+    return newUser;
   }
 }
 export const { handlers, signIn, signOut, auth } = NextAuth({
@@ -28,20 +28,20 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           picture: profile.picture,
         };
         const user = await HandleLogin(obj);
-        return {user}; // Do different verification for other providers that don't have `email_verified`
+        return { user }; // Do different verification for other providers that don't have `email_verified`
       }
     },
     async jwt({ token }) {
-      const user = await HandleLogin({email : token.email})
+      const user = await HandleLogin({ email: token.email });
       // console.log("user in jwt" , user);
-      token._id = user._id
-      token.role = user.role
-      return token
+      token._id = user._id;
+      token.role = user.role;
+      return token;
     },
     session({ session, token }) {
-      session.user._id = token._id
-      session.user.role = token.role
-      return session
+      session.user._id = token._id;
+      session.user.role = token.role;
+      return session;
     },
   },
 });

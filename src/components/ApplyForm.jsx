@@ -14,11 +14,12 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useForm } from "react-hook-form";
+import { auth } from "../../auth";
 const FormSchema = z.object({
   bio: z.string().min(2).max(120),
   hospital: z.string().min(2).max(50),
-  fees: z.string(),
-  gender: z.string(),
+  fees: z.string().min(3).max(4),
+  gender: z.string().min(4).max(6),
   appointmentTime: z.string(),
   degree: z.string(),
   specialization: z.string(),
@@ -27,6 +28,7 @@ const FormSchema = z.object({
   address: z.string().min(5),
 });
 export default function ApplyForm() {
+
   const form = useForm({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -44,6 +46,7 @@ export default function ApplyForm() {
   });
   async function onSubmit(values) {
     console.log(values);
+    
   }
   return (
     <Form {...form}>
