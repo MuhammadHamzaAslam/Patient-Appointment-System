@@ -15,7 +15,7 @@ import Image from "next/image";
 
 export default async function Navbar() {
   const session = await auth(); 
-  console.log('session =>' ,session);
+  // console.log('session =>' ,session);
 
 
   return (

@@ -1,6 +1,10 @@
 import ApplyForm from "@/components/ApplyForm";
+import { auth } from "../../../../auth";
 
-export default function DoctorApplyForm() {
+export default async function DoctorApplyForm() {
+  const session = await auth()
+  console.log("session in apply form" , session);
+  
   
   return (
     <section className="my-5 mx-7">
@@ -16,7 +20,7 @@ export default function DoctorApplyForm() {
           appointments seamlessly.
         </p>
       </div>
-      <ApplyForm />
+      <ApplyForm session={session} />
     </section>
   );
 }

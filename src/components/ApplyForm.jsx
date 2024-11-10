@@ -2,6 +2,7 @@
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
+import { useToast } from "@/hooks/use-toast"
 import {
   Form,
   FormControl,
@@ -14,12 +15,12 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useForm } from "react-hook-form";
-import { auth } from "../../auth";
+import { addRequest } from "@/actions/request";
 const FormSchema = z.object({
   bio: z.string().min(2).max(120),
   hospital: z.string().min(2).max(50),
-  fees: z.string().min(3).max(4),
-  gender: z.string().min(4).max(6),
+  fees: z.string(),
+  gender: z.string(),
   appointmentTime: z.string(),
   degree: z.string(),
   specialization: z.string(),
@@ -27,8 +28,8 @@ const FormSchema = z.object({
   number: z.string().regex(/^\d+$/, "Enter a valid phone number"),
   address: z.string().min(5),
 });
-export default function ApplyForm() {
-
+export default function ApplyForm({ session }) {
+  const { toast } = useToast()
   const form = useForm({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -45,8 +46,15 @@ export default function ApplyForm() {
     },
   });
   async function onSubmit(values) {
-    console.log(values);
-    
+    values.user = session?.user?._id
+    // console.log(values);
+    await addRequest(values)
+    toast({
+      title: "Your Application Has Recieved",
+      description: "You Will Be Respond In 3 business days",
+    })
+    form.reset()
+
   }
   return (
     <Form {...form}>
