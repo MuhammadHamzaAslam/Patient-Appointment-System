@@ -1,4 +1,3 @@
-// components/Profile.js
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { auth } from "../../../auth";
@@ -18,7 +17,7 @@ export default async function Profile() {
             <CardHeader>
               <div className="flex items-center space-x-4">
                 <img
-                  src={session.user.image}
+                  src={session?.user?.image}
                   alt={session.user.name}
                   className="w-16 h-16 rounded-full border-2 border-blue-500 hover:scale-110 transform transition duration-300"
                 />

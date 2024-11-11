@@ -11,6 +11,7 @@ async function HandleLogin(obj) {
   } else {
     let newUser = await UserModal(obj);
     newUser = newUser.save();
+
     return newUser;
   }
 }
