@@ -1,8 +1,8 @@
-"use client"
+"use client";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
-import { useToast } from "@/hooks/use-toast"
+import { useToast } from "@/hooks/use-toast";
 import {
   Form,
   FormControl,
@@ -29,7 +29,7 @@ const FormSchema = z.object({
   address: z.string().min(5),
 });
 export default function ApplyForm({ session }) {
-  const { toast } = useToast()
+  const { toast } = useToast();
   const form = useForm({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -46,15 +46,23 @@ export default function ApplyForm({ session }) {
     },
   });
   async function onSubmit(values) {
-    values.user = session?.user?._id
+    values.user = session?.user?._id;
     // console.log(values);
-    await addRequest(values)
-    toast({
-      title: "Your Application Has Recieved",
-      description: "You Will Be Respond In 3 business days",
-    })
-    form.reset()
-
+    const response = await addRequest(values);
+    // console.log("response in apply form", response);
+    if (response.error) {
+      toast({
+        title: "Your Application can't submit",
+        description: `Because ${response.msg}`,
+      });
+      form.reset();
+    } else {
+      toast({
+        title: "Your Application Has Recieved",
+        description: "You Will Be Respond In 3 business days",
+      });
+      form.reset();
+    }
   }
   return (
     <Form {...form}>
