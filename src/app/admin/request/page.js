@@ -1,14 +1,19 @@
-import React from 'react'
-import { auth } from '../../../../auth'
-import { redirect } from 'next/navigation';
+import React from "react";
+import { auth } from "../../../../auth";
+import { redirect } from "next/navigation";
+import { getRequest } from "@/actions/request";
+import AdminRequestList from "@/components/DoctorRequest";
 
 export default async function AdminRequest() {
-    const session = await auth()
-    // console.log("session =>" , session);
-    if(!session && session?.user?.role !== "admin") redirect('/')
+  const session = await auth();
+  // console.log("session =>" , session);
+  if (!session && session?.user?.role !== "admin") redirect("/");
+  const allRequest = await getRequest();
+  console.log("allRequest =>", allRequest);
+
   return (
     <section>
-      <h1 className='flex justify-center items-center min-h-screen text-5xl font-bold'>Doctor Request</h1>
+      <AdminRequestList allRequests={allRequest} />
     </section>
-  )
+  );
 }

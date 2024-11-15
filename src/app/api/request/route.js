@@ -3,7 +3,7 @@ import { RequestModal } from "@/lib/models/requestModal";
 
 export async function GET() {
   await connectDB();
-  let allUser = await RequestModal.find();
+  let allUser = await RequestModal.find().populate("user");
   return Response.json({
     allUser,
     msg: "All Request Fetched",

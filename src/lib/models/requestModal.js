@@ -1,7 +1,7 @@
 const { Schema, default: mongoose } = require("mongoose");
 
 const doctorRequestSchema = new Schema({
-  user: { type: mongoose.Types.ObjectId, ref: "User" },
+  user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   status: {
     type: String,
     default: "pending",

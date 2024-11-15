@@ -1,0 +1,164 @@
+"use client";
+
+import React, { useState } from "react";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import { Button } from "@/components/ui/button";
+import { Eye, CheckCircle, XCircle } from "lucide-react";
+
+export default function AdminRequestList({ allRequests }) {
+  const [openSheet, setOpenSheet] = useState(null);
+
+  const handleAccept = (id) => {
+    console.log(`Accepted request ${id}`);
+    // Implement your accept logic here
+  };
+
+  const handleReject = (id) => {
+    console.log(`Rejected request ${id}`);
+    // Implement your reject logic here
+  };
+
+  return (
+    <section className="container mx-auto p-4">
+      <h1 className="text-4xl font-bold mb-6 text-center text-gray-800">
+        Doctor Requests
+      </h1>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {allRequests?.allUser?.map((request) => (
+          <Card
+            key={request._id}
+            className="shadow-xl border rounded-lg hover:scale-105 transition transform duration-300 bg-white"
+          >
+            <CardContent className="p-5 flex flex-col items-center">
+              <img
+                src={request.user.picture}
+                alt={`${request.user.firstName}'s avatar`}
+                className="w-16 h-16 rounded-full mb-3 shadow"
+              />
+              <h2 className="text-lg font-semibold text-gray-800">
+                {request.user.firstName} {request.user.lastName || ""}
+              </h2>
+              <p className="text-sm text-gray-600">
+                <strong>Gender:</strong> {request.gender}
+              </p>
+              <p className="text-sm text-gray-600">
+                <strong>Hospital:</strong> {request.hospital}
+              </p>
+            </CardContent>
+            <CardFooter className="flex justify-between items-center p-4 bg-gray-50 rounded-b-lg">
+              <Sheet
+                open={openSheet === request._id}
+                onOpenChange={(open) => setOpenSheet(open ? request._id : null)}
+              >
+                <SheetTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="text-blue-500 hover:text-blue-700"
+                  >
+                    <Eye className="h-5 w-5" />
+                    <span className="sr-only">View details</span>
+                  </Button>
+                </SheetTrigger>
+                <SheetContent className="overflow-y-auto ">
+                  <SheetHeader>
+                    <SheetTitle>Request Details</SheetTitle>
+                  </SheetHeader>
+                  <div className="mt-4 space-y-4">
+                    {/* Add profile picture in the sheet content */}
+                    <div className="flex justify-center">
+                      <img
+                        src={request.user.picture}
+                        alt={`${request.user.firstName}'s avatar`}
+                        className="w-24 h-24 rounded-full mb-3 shadow-lg"
+                      />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-gray-700">Name</h3>
+                      <p>
+                        {request.user.firstName} {request.user.lastName || ""}
+                      </p>
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-gray-700">Email</h3>
+                      <p>{request.user.email}</p>
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-gray-700">Gender</h3>
+                      <p>{request.gender}</p>
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-gray-700">
+                        Appointment Time
+                      </h3>
+                      <p>{request.appointmentTime}</p>
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-gray-700">Hospital</h3>
+                      <p>{request.hospital}</p>
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-gray-700">
+                        Specialization
+                      </h3>
+                      <p>{request.specialization}</p>
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-gray-700">Degree</h3>
+                      <p>{request.degree}</p>
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-gray-700">
+                        Experience
+                      </h3>
+                      <p>{request.experience} years</p>
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-gray-700">Fees</h3>
+                      <p>{request.fees} PKR</p>
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-gray-700">Address</h3>
+                      <p>{request.address}</p>
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-gray-700">Bio</h3>
+                      <p>{request.bio}</p>
+                    </div>
+                  </div>
+                </SheetContent>
+              </Sheet>
+              <div className="flex gap-2">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="text-green-500 hover:text-green-700"
+                  onClick={() => handleAccept(request._id)}
+                >
+                  <CheckCircle className="h-5 w-5" />
+                  <span className="sr-only">Accept request</span>
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="text-red-500 hover:text-red-700"
+                  onClick={() => handleReject(request._id)}
+                >
+                  <XCircle className="h-5 w-5" />
+                  <span className="sr-only">Reject request</span>
+                </Button>
+              </div>
+            </CardFooter>
+          </Card>
+        ))}
+      </div>
+    </section>
+  );
+}
