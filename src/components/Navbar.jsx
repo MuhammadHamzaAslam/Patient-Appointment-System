@@ -15,7 +15,7 @@ import Image from "next/image";
 
 export default async function Navbar() {
   const session = await auth(); 
-  console.log('session =>' ,session);
+  // console.log('session =>' ,session);
 
 
   return (
@@ -44,10 +44,12 @@ export default async function Navbar() {
             <Menubar>
               <MenubarMenu>
                 <MenubarTrigger className="flex items-center space-x-2 cursor-pointer">
-                  <img
-                    src={session?.user?.image}
+                  <Image
+                    src={session.user.image}
                     alt="Your Pic"
-                    className="rounded-full h-9 "
+                    height={35}
+                    width={35}
+                    className="rounded-full"
                   />
                 </MenubarTrigger>
                 <MenubarContent className="bg-white border rounded-lg shadow-lg mt-2">

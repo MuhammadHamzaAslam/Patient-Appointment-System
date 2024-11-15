@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { auth } from "../../../auth";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import Image from "next/image";
 
 export default async function Profile() {
   const session = await auth();
@@ -16,10 +17,12 @@ export default async function Profile() {
           <Card className="max-w-md w-full p-6 bg-white shadow-lg rounded-lg transform transition-all hover:shadow-2xl hover:scale-105 duration-300">
             <CardHeader>
               <div className="flex items-center space-x-4">
-                <img
+                <Image
                   src={session?.user?.image}
                   alt={session.user.name}
-                  className="w-16 h-16 rounded-full border-2 border-blue-500 hover:scale-110 transform transition duration-300"
+                  height={75}
+                  width={75}
+                  className="rounded-full border-2 border-blue-500 hover:scale-110 transform transition duration-300"
                 />
                 <div>
                   <h2 className="text-2xl font-semibold text-gray-800 hover:text-blue-600 transition-colors duration-300">
