@@ -48,3 +48,36 @@ export async function POST(request) {
     );
   }
 }
+
+export async function PUT(request) {
+  await connectDB();
+  try {
+    let obj = await request.json();
+    let { status, id } = obj;
+    const update = RequestModal.findOneAndUpdate(
+      {
+        _id: id,
+      },
+      {
+        status: status,
+      }
+    ).exec();
+    return Response.json(
+      {
+        error: false,
+        msg: "Request Update Successfully",
+        user: update,
+      },
+      { status: 201 }
+    );
+  } catch (error) {
+    console.log(error);
+    return Response.json(
+      {
+        error: true,
+        msg: "Something Went Wrong!",
+      },
+      { status: 500 }
+    );
+  }
+}

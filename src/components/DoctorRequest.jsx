@@ -11,18 +11,19 @@ import {
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Eye, CheckCircle, XCircle } from "lucide-react";
+import { updateRequest } from "@/actions/request";
 
 export default function AdminRequestList({ allRequests }) {
   const [openSheet, setOpenSheet] = useState(null);
 
-  const handleAccept = (id) => {
+  const handleAccept = async (id) => {
+    await updateRequest(id, "accepted");
     console.log(`Accepted request ${id}`);
-    // Implement your accept logic here
   };
 
-  const handleReject = (id) => {
+  const handleReject = async (id) => {
     console.log(`Rejected request ${id}`);
-    // Implement your reject logic here
+    await updateRequest(id, "rejected");
   };
 
   return (
@@ -47,6 +48,9 @@ export default function AdminRequestList({ allRequests }) {
               </h2>
               <p className="text-sm text-gray-600">
                 <strong>Gender:</strong> {request.gender}
+              </p>
+              <p className="text-sm text-gray-600">
+                <strong>Status:</strong> {request.status}
               </p>
               <p className="text-sm text-gray-600">
                 <strong>Hospital:</strong> {request.hospital}
@@ -136,24 +140,48 @@ export default function AdminRequestList({ allRequests }) {
                 </SheetContent>
               </Sheet>
               <div className="flex gap-2">
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="text-green-500 hover:text-green-700"
-                  onClick={() => handleAccept(request._id)}
-                >
-                  <CheckCircle className="h-5 w-5" />
-                  <span className="sr-only">Accept request</span>
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="text-red-500 hover:text-red-700"
-                  onClick={() => handleReject(request._id)}
-                >
-                  <XCircle className="h-5 w-5" />
-                  <span className="sr-only">Reject request</span>
-                </Button>
+                {request.status === "pending" && (
+                  <>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="text-green-500 hover:text-green-700"
+                      onClick={() => handleAccept(request._id)}
+                    >
+                      <CheckCircle className="h-5 w-5" />
+                      <span className="sr-only">Accept request</span>
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="text-red-500 hover:text-red-700"
+                      onClick={() => handleReject(request._id)}
+                    >
+                      <XCircle className="h-5 w-5" />
+                      <span className="sr-only">Reject request</span>
+                    </Button>
+                  </>
+                )}
+                {request.status === "accepted" && (
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="text-green-500 hover:text-green-700"
+                  >
+                    <CheckCircle className="h-5 w-5" />
+                    <span className="sr-only">Accepted request</span>
+                  </Button>
+                )}
+                {request.status === "rejected" && (
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="text-red-500 hover:text-red-700"
+                  >
+                    <XCircle className="h-5 w-5" />
+                    <span className="sr-only">Rejected request</span>
+                  </Button>
+                )}
               </div>
             </CardFooter>
           </Card>
