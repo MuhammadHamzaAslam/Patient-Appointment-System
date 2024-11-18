@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import {
   Sheet,
@@ -12,9 +12,16 @@ import {
 import { Button } from "@/components/ui/button";
 import { Eye, CheckCircle, XCircle } from "lucide-react";
 import { updateRequest } from "@/actions/request";
+import { useSearchParams, usePathname, useRouter } from "next/navigation";
 
 export default function AdminRequestList({ allRequests }) {
   const [openSheet, setOpenSheet] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState("all");
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const { replace } = useRouter();
+
+  const statuses = ["all", "pending", "accepted", "rejected"];
 
   const handleAccept = async (id) => {
     await updateRequest(id, "accepted");
@@ -26,11 +33,43 @@ export default function AdminRequestList({ allRequests }) {
     await updateRequest(id, "rejected");
   };
 
+  useEffect(() => {
+    const params = new URLSearchParams(searchParams);
+    if (selectedCategory) {
+      params.set("status", selectedCategory);
+    } else {
+      params.delete("status");
+    }
+    replace(`${pathname}?${params.toString()}`);
+  }, [selectedCategory]);
+
+  // console.log("selectedCategory =>", selectedCategory);
+
   return (
     <section className="container mx-auto p-4">
       <h1 className="text-4xl font-bold mb-6 text-center text-gray-800">
         Doctor Requests
       </h1>
+
+      <div className="flex justify-center items-center space-x-4 my-5">
+        {statuses.map((status) => (
+          <Button
+            key={status}
+            variant={selectedCategory === status ? "default" : "outline"}
+            className={`
+              rounded-md text-sm px-4 py-2 capitalize transition-all
+              ${
+                selectedCategory === status
+                  ? "bg-blue-600 text-white"
+                  : "text-gray-700"
+              }
+            `}
+            onClick={() => setSelectedCategory(status)}
+          >
+            {status}
+          </Button>
+        ))}
+      </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {allRequests?.allUser?.map((request) => (
           <Card
@@ -39,7 +78,7 @@ export default function AdminRequestList({ allRequests }) {
           >
             <CardContent className="p-5 flex flex-col items-center">
               <img
-                src={request.user.picture}
+                src={request?.user?.picture}
                 alt={`${request.user.firstName}'s avatar`}
                 className="w-16 h-16 rounded-full mb-3 shadow"
               />

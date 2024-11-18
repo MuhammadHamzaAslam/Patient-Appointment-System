@@ -1,9 +1,15 @@
 import connectDB from "@/lib/connectDB";
 import { RequestModal } from "@/lib/models/requestModal";
 
-export async function GET() {
+export async function GET(req) {
   await connectDB();
-  let allUser = await RequestModal.find().populate("user");
+  // console.log("req =>" , req);
+  const status = req.nextUrl.searchParams.get("status");
+  console.log("status in backend =>", status);
+
+  let allUser = await RequestModal.find({
+    status : "accepted"
+  }).populate("user");
   return Response.json({
     allUser,
     msg: "All Request Fetched",

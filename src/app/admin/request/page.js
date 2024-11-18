@@ -4,12 +4,12 @@ import { redirect } from "next/navigation";
 import { getRequest } from "@/actions/request";
 import AdminRequestList from "@/components/DoctorRequest";
 
-export default async function AdminRequest() {
+export default async function AdminRequest({ searchParams }) {
   const session = await auth();
-  // console.log("session =>" , session);
+  const {status} = searchParams
   if (!session && session?.user?.role !== "admin") redirect("/");
-  const allRequest = await getRequest();
-  console.log("allRequest =>", allRequest);
+  const allRequest = await getRequest(status);
+  // console.log("allRequest =>", allRequest);
 
   return (
     <section>

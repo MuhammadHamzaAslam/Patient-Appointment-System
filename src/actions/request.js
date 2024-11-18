@@ -11,11 +11,15 @@ export async function addRequest(data) {
   return add;
 }
 
-export async function getRequest(data) {
-  let add = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/request`);
-
-  add = add.json();
-
+export async function getRequest(status) {
+  let add = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/request?status=${
+      status ? status : ""
+    }`
+  );
+  console.log("status =>" , status);
+  
+  add = await add.json();
   return add;
 }
 
