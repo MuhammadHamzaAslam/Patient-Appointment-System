@@ -5,7 +5,7 @@ const doctorRequestSchema = new Schema({
   status: {
     type: String,
     default: "pending",
-    enum: ["pending", "accepted", "rejected" , "all"],
+    enum: ["pending", "accepted", "rejected"],
   },
   bio: String,
   hospital: String,

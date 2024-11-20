@@ -1,17 +1,11 @@
-import { Card, CardContent } from "@/components/ui/card";
 import Link from "next/link";
-import Image from "next/image";
-import {
-  FaFacebook,
-  FaInstagram,
-  FaPinterest,
-  FaTwitter,
-} from "react-icons/fa";
-import { specialists } from "@/lib/specialist";
 import { Button } from "./ui/button";
+import { getRequest } from "@/actions/request";
 
 export default function DoctorList({ isHome }) {
-  const filtered = isHome ? specialists.slice(0, 3) : specialists
+  const {doctors} = getRequest("accepted")
+  console.log("doctors =>" , doctors);
+  
   return (
     <section className="py-12 px-4 md:py-24 bg-gray-50">
       <div className="container mx-auto max-w-6xl">
@@ -25,15 +19,14 @@ export default function DoctorList({ isHome }) {
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900">
             Our Specialist
           </h2>
-          {
-            isHome ?
-              <Link href={"/doctors"}>
-                <Button>See All</Button>
-              </Link> : null
-          }
+          {isHome ? (
+            <Link href={"/doctors"}>
+              <Button>See All</Button>
+            </Link>
+          ) : null}
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+        {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
           {filtered.map((specialist, index) => (
             <Card
               key={index}
@@ -83,11 +76,8 @@ export default function DoctorList({ isHome }) {
                 </div>
               </CardContent>
             </Card>
-
-          ))
-
-          }
-        </div>
+          ))}
+        </div> */}
       </div>
     </section>
   );

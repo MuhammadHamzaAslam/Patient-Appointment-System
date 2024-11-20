@@ -6,7 +6,7 @@ export async function addRequest(data) {
     body: JSON.stringify(data),
   });
 
-  add = await add.json();
+  add = add.json();
 
   return add;
 }

@@ -8,7 +8,7 @@ export default async function AdminRequest({ searchParams }) {
   const session = await auth();
   const {status} = searchParams
   if (!session && session?.user?.role !== "admin") redirect("/");
-  const allRequest = await getRequest(status);
+  const allRequest = await getRequest(status) ;   
   // console.log("allRequest =>", allRequest);
 
   return (
