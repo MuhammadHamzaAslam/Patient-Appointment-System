@@ -2,9 +2,10 @@ import Link from "next/link";
 import { Button } from "./ui/button";
 import { getRequest } from "@/actions/request";
 
-export default function DoctorList({ isHome }) {
-  const {doctors} = getRequest("accepted")
-  console.log("doctors =>" , doctors);
+export default async function DoctorList({ isHome }) {
+  const {doctor} = await getRequest("accepted")
+  console.log("doctor =>" , doctor);
+  
   
   return (
     <section className="py-12 px-4 md:py-24 bg-gray-50">

@@ -30,7 +30,7 @@ export async function updateRequest(id, status) {
   });
 
   request = await request.json();
-  revalidatePath("http://localhost:3000/admin/request");
+  revalidatePath("admin/request");
 
   return request;
 }
