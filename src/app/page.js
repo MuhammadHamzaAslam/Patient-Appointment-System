@@ -11,7 +11,6 @@ export default function Home() {
       <HeroSection />
       <MedicalService/>
       <DoctorList isHome={true} />
-      <Footer/>
     </div>
   );
 }
