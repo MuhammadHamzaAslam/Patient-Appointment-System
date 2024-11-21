@@ -3,8 +3,8 @@ import { Button } from "./ui/button";
 import { getRequest } from "@/actions/request";
 
 export default async function DoctorList({ isHome }) {
-  const {doctor} = await getRequest("accepted")
-  console.log("doctor =>" , doctor);
+  const { allUser } = await getRequest("accepted")
+  console.log("doctor =>" , allUser);
   
   
   return (
@@ -83,3 +83,53 @@ export default async function DoctorList({ isHome }) {
     </section>
   );
 }
+doctor => [
+  {
+    _id: '6730a99af557d324416f448b',
+    user: {
+      _id: '672f3ffc85bcb136371dd035',
+      firstName: 'Hamza',
+      lastName: 'Aslam',
+      email: 'hamzaaslam19087@gmail.com',
+      picture: 'https://lh3.googleusercontent.com/a/ACg8ocJXXCvPi6Khr-6IKQke2PE8o6AyHKTudIwO4B7yOHSJoPnSQ5A=s96-c',
+      role: 'admin',
+      __v: 0
+    },
+    status: 'accepted',
+    bio: 'Hello i am Muhammad Hamza',
+    hospital: 'Jinnah',
+    fees: '2000',
+    gender: 'Male',
+    appointmentTime: '22:30',
+    degree: 'MBBS',
+    specialization: 'Child Specilaist',
+    experience: '5',
+    number: '03172772879',
+    address: '1371/2 Azizabad',
+    __v: 0
+  },
+  {
+    _id: '673df4a98391d8834fa34e99',
+    user: {
+      _id: '6732fee0d8ef16826f04961c',
+      firstName: 'Muhammad',
+      lastName: 'Ahmed',
+      email: 'prince1ahmed111@gmail.com',
+      picture: 'https://lh3.googleusercontent.com/a/ACg8ocLWCRSgc4MSKnosnqg9tGAzUlKTNWA0o_HSh7f-aIgI5NpOpEg=s96-c',
+      role: 'user',
+      __v: 0
+    },
+    status: 'accepted',
+    bio: 'Hello I am Muhammad Hamza',
+    hospital: 'Tahir Medical',
+    fees: '1500',
+    gender: 'Male',
+    appointmentTime: '14:00',
+    degree: 'MBBS',
+    specialization: 'Child Specialist',
+    experience: '4',
+    number: '03362905320',
+    address: '1371/2 Azizabad',
+    __v: 0
+  }
+]

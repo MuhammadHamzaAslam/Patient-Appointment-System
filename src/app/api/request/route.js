@@ -48,6 +48,8 @@ export async function POST(request) {
       );
     } else {
       let newRequest = new RequestModal({ ...obj });
+      console.log("newRequest =>" , newRequest);
+      
       newRequest = await newRequest.save();
       return Response.json(
         {
