@@ -28,6 +28,7 @@ import {
 } from "@/components/ui/select";
 import { Card, CardContent } from "@/components/ui/card";
 import { UploadIcon, Cross2Icon } from "@radix-ui/react-icons";
+import { Checkbox } from "antd";
 
 const FormSchema = z.object({
   bio: z
@@ -51,12 +52,25 @@ const FormSchema = z.object({
   experience: z.string().min(1, "Experience is required"),
   number: z.string().regex(/^\d+$/, "Enter a valid phone number"),
   address: z.string().min(5, "Address must be at least 5 characters"),
+  days: z.array(z.string()).nonempty("Select at least one day"),
 });
+
+const daysOptions = [
+  { label: "Monday", value: "Monday" },
+  { label: "Tuesday", value: "Tuesday" },
+  { label: "Wednesday", value: "Wednesday" },
+  { label: "Thursday", value: "Thursday" },
+  { label: "Friday", value: "Friday" },
+  { label: "Saturday", value: "Saturday" },
+  { label: "Sunday", value: "Sunday" },
+];
 
 export default function EnhancedApplyForm({ session }) {
   const [file, setFile] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [selectedDays, setSelectedDays] = useState([]);
   const { toast } = useToast();
+  console.log("selectedDays =>", selectedDays);
 
   const form = useForm({
     resolver: zodResolver(FormSchema),
@@ -72,6 +86,7 @@ export default function EnhancedApplyForm({ session }) {
       experience: "",
       number: "",
       address: "",
+      days: [],
     },
   });
 
@@ -86,6 +101,11 @@ export default function EnhancedApplyForm({ session }) {
     },
     multiple: false,
   });
+
+  const handleDaysChange = (checkedValues) => {
+    setSelectedDays(checkedValues);
+    form.setValue("days", checkedValues); // Update the form value for days
+  };
 
   async function onSubmit(values) {
     setIsSubmitting(true);
@@ -105,6 +125,7 @@ export default function EnhancedApplyForm({ session }) {
         });
         form.reset();
         setFile(null);
+        setSelectedDays([]);
       }
     } catch (error) {
       toast({
@@ -284,6 +305,20 @@ export default function EnhancedApplyForm({ session }) {
                   </FormItem>
                 )}
               />
+            </div>
+
+            <div className="space-y-4">
+              <FormLabel>Available Days</FormLabel>
+              <Checkbox.Group
+                options={daysOptions}
+                onChange={handleDaysChange}
+                value={selectedDays}
+                className="flex flex-wrap gap-2"
+              />
+              <FormDescription>
+                Select the days you are available for appointments.
+              </FormDescription>
+              <FormMessage>{form.formState.errors.days?.message}</FormMessage>
             </div>
 
             <FormField

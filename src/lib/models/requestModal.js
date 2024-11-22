@@ -18,6 +18,7 @@ const doctorRequestSchema = new Schema({
   experience: String,
   number: String,
   address: String,
+  days: [String],
 });
 
 export const RequestModal =

@@ -105,7 +105,7 @@ export async function uploadImage(file) {
 function generateSignature(timestamp, cloudApiSecret) {
   const crypto = require("crypto");
   return crypto
-    .createHash("sha256")
+    .createHash("sha256z")
     .update(`timestamp=${timestamp}${cloudApiSecret}`)
     .digest("hex");
 }
