@@ -12,6 +12,8 @@ export async function GET(req) {
     // console.log("Query being executed:", query);
 
     const allUser = await RequestModal.find(query).populate("user");
+    // console.log("allUser in backend get api" , allUser);
+    
     return Response.json({
       allUser,
       msg: "All Request Fetched",
@@ -32,7 +34,6 @@ export async function POST(request) {
   await connectDB();
   try {
     const obj = await request.json();
-    console.log("POST data:", obj);
 
     const userRequestedBefore = await RequestModal.findOne({
       user: obj.user,
@@ -77,8 +78,6 @@ export async function PUT(request) {
   try {
     const obj = await request.json();
     const { status, id } = obj;
-
-    console.log("PUT data:", obj);
 
     const update = await RequestModal.findOneAndUpdate(
       { _id: id },

@@ -104,7 +104,7 @@ export default function EnhancedApplyForm({ session }) {
 
   const handleDaysChange = (checkedValues) => {
     setSelectedDays(checkedValues);
-    form.setValue("days", checkedValues); // Update the form value for days
+    form.setValue("days", checkedValues);
   };
 
   async function onSubmit(values) {

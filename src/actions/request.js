@@ -23,12 +23,14 @@ export async function addRequest(data) {
 export async function getRequest(status) {
   let add = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_URL}/api/request?status=${
-      status ? status : "all"
+      status ? status : ""
     }`
   );
-  console.log("status =>", status);
 
+  
+  
   add = await add.json();
+  // console.log("add in action " , add);
   return add;
 }
 
