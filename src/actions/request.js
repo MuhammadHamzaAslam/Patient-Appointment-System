@@ -1,4 +1,4 @@
-"use server"
+"use server";
 import { revalidatePath } from "next/cache";
 
 export async function addRequest(data) {
@@ -24,11 +24,12 @@ export async function getRequest(status) {
   let add = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_URL}/api/request?status=${
       status ? status : ""
-    }`
-  );  
+    }`,
+    {
+      cache: "no-cache",
+    }
+  );
 
-  
-  
   add = await add.json();
   // console.log("add in action " , add);
   return add.allUser;
