@@ -27,7 +27,6 @@ export async function getRequest(status) {
   );
 
   add = await add.json();
-  // console.log("add in action " , add);
   return add.allUser;
 }
 
