@@ -3,7 +3,7 @@ import { services } from "@/lib/services";
 
 export default function MedicalService() {
   return (
-    <section className="py-12 px-4 md:py-24">
+    <section className="py-12 md:py-24">
       <div className="container mx-auto max-w-6xl">
         <div className="text-center mb-12">
           <h3 className="text-blue-500 font-medium mb-4 uppercase tracking-wider">

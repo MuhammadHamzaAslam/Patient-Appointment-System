@@ -2,7 +2,6 @@
 import { revalidatePath } from "next/cache";
 
 export async function addRequest(data) {
-  console.log("data in backend action =>", data);
   const startTime = new Date(`1970-01-01T${data.appointmentStartTime}:00`);
   const endTime = new Date(`1970-01-01T${data.appointmentEndTime}:00`);
 

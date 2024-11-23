@@ -9,7 +9,7 @@ export default async function DoctorList({ isHome }) {
   console.log("data =>", data);
 
   return (
-    <section className="py-12 px-4 md:py-24 bg-gray-50">
+    <section className="py-12 md:py-24 bg-gray-50">
       <div className="container mx-auto max-w-6xl">
         <div className="text-center mb-12">
           <h3 className="text-blue-500 font-semibold text-xl mb-4 uppercase tracking-wider">
@@ -18,7 +18,7 @@ export default async function DoctorList({ isHome }) {
         </div>
 
         <div className="flex justify-between mb-10">
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900">
+          <h2 className="text-2xl md:text-4xl font-bold text-gray-900">
             Our Specialist
           </h2>
           {isHome ? (
