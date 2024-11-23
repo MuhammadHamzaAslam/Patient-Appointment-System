@@ -24,10 +24,7 @@ export async function getRequest(status) {
   let add = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_URL}/api/request?status=${
       status ? status : ""
-    }`,
-    {
-      cache: "no-cache",
-    }
+    }`
   );
 
   add = await add.json();
