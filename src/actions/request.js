@@ -25,13 +25,13 @@ export async function getRequest(status) {
     `${process.env.NEXT_PUBLIC_BASE_URL}/api/request?status=${
       status ? status : ""
     }`
-  );
+  );  
 
   
   
   add = await add.json();
   // console.log("add in action " , add);
-  return add;
+  return add.allUser;
 }
 
 export async function updateRequest(id, status) {
