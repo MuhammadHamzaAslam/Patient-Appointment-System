@@ -1,5 +1,6 @@
 import connectDB from "@/lib/connectDB";
 import { RequestModal } from "@/lib/models/requestModal";
+import { UserModal } from "@/lib/models/userModal";
 
 export async function GET(req) {
   await connectDB();
@@ -13,7 +14,7 @@ export async function GET(req) {
 
     const allUser = await RequestModal.find(query).populate("user");
     // console.log("allUser in backend get api" , allUser);
-    
+
     return Response.json({
       allUser,
       msg: "All Request Fetched",
@@ -49,8 +50,8 @@ export async function POST(request) {
       );
     } else {
       let newRequest = new RequestModal({ ...obj });
-      console.log("newRequest =>" , newRequest);
-      
+      console.log("newRequest =>", newRequest);
+
       newRequest = await newRequest.save();
       return Response.json(
         {
@@ -79,11 +80,16 @@ export async function PUT(request) {
     const obj = await request.json();
     const { status, id } = obj;
 
+    // role updae work remaining
+
+    // const request = await RequestModal.findOne({ _id: id });
+    // await UserModal.findOneAndUpdate({ _id: request.user }, { role: "doctor" });
+
     const update = await RequestModal.findOneAndUpdate(
       { _id: id },
       { status },
       { new: true }
-    );
+    ).exec();
 
     return Response.json(
       {

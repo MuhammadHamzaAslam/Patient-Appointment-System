@@ -32,12 +32,12 @@ export async function getRequest(status) {
 
 export async function updateRequest(id, status) {
   let request = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/request`, {
-    method: "Put",
+    method: "PUT",
     body: JSON.stringify({ id, status }),
   });
 
   request = await request.json();
-  revalidatePath("admin/request");
+  revalidatePath("/admin/request");
 
   return request;
 }
