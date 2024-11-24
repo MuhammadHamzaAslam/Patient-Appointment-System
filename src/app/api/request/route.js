@@ -79,12 +79,25 @@ export async function PUT(request) {
   try {
     const obj = await request.json();
     const { status, id } = obj;
+    
+    const requestDoc = await RequestModal.findOne({ _id: id });
 
-    // role updae work remaining
+    if (!requestDoc) {
+      return Response.json(
+        {
+          error: true,
+          msg: "Request not found",
+        },
+        { status: 404 }
+      );
+    }
 
-    // const request = await RequestModal.findOne({ _id: id });
-    // await UserModal.findOneAndUpdate({ _id: request.user }, { role: "doctor" });
-
+    if (status === "accepted") {
+      await UserModal.findOneAndUpdate(
+        { _id: requestDoc.user },
+        { role: "doctor" }
+      );
+    }
     const update = await RequestModal.findOneAndUpdate(
       { _id: id },
       { status },
