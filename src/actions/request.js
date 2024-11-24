@@ -30,6 +30,15 @@ export async function getRequest(status) {
   return add.allUser;
 }
 
+export async function getSingleRequest(id) {
+  let singleRequest = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/request/${id}`
+  );
+
+  singleRequest = await singleRequest.json();
+  return singleRequest;
+}
+
 export async function updateRequest(id, status) {
   let request = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/request`, {
     method: "PUT",
