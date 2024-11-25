@@ -14,6 +14,7 @@ import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { auth } from "../../../../auth";
 import Link from "next/link";
+import { DatePicker } from "@/components/DatePicker";
 
 export default async function DoctorDetail({ params }) {
   const session = await auth();
@@ -122,19 +123,8 @@ export default async function DoctorDetail({ params }) {
             </div>
           </CardContent>
 
-          {/* Book Appointment Button */}
           <CardFooter className="p-6 bg-gray-50">
-            {!session ? (
-              <Link href={"/login"}>
-                <Button className="w-full md:w-auto" size="lg">
-                  Login TO Book an Appointment
-                </Button>
-              </Link>
-            ) : (
-              <Button className="w-full md:w-auto" size="lg">
-                Book an Appointment
-              </Button>
-            )}
+            <DatePicker session={session} request={params.id} />
           </CardFooter>
         </Card>
       </div>
