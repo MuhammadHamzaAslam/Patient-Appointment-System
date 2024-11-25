@@ -12,8 +12,13 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { auth } from "../../../../auth";
+import Link from "next/link";
 
 export default async function DoctorDetail({ params }) {
+  const session = await auth();
+  // console.log("session =>" , session);
+
   const singleRequest = await getSingleRequest(params.id);
   const doctor = singleRequest.singleRequest[0];
 
@@ -119,9 +124,17 @@ export default async function DoctorDetail({ params }) {
 
           {/* Book Appointment Button */}
           <CardFooter className="p-6 bg-gray-50">
-            <Button className="w-full md:w-auto" size="lg">
-              Book an Appointment
-            </Button>
+            {!session ? (
+              <Link href={"/login"}>
+                <Button className="w-full md:w-auto" size="lg">
+                  Login TO Book an Appointment
+                </Button>
+              </Link>
+            ) : (
+              <Button className="w-full md:w-auto" size="lg">
+                Book an Appointment
+              </Button>
+            )}
           </CardFooter>
         </Card>
       </div>
