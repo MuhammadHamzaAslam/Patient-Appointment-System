@@ -18,7 +18,6 @@ import { DatePicker } from "@/components/DatePicker";
 
 export default async function DoctorDetail({ params }) {
   const session = await auth();
-  // console.log("session =>" , session);
 
   const singleRequest = await getSingleRequest(params.id);
   const doctor = singleRequest.singleRequest[0];

@@ -10,10 +10,8 @@ export async function GET(req) {
     if (status && status !== "all") {
       query.status = status;
     }
-    // console.log("Query being executed:", query);
 
     const allUser = await RequestModal.find(query).populate("user");
-    // console.log("allUser in backend get api" , allUser);
 
     return Response.json({
       allUser,

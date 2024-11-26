@@ -11,18 +11,14 @@ export async function addAppointment(data) {
 
 export async function getAppointment(role, id) {
   let url;
-  if (role == "user") {
-    url = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/appointment?user=${id}`
-    );
+  if (role === " user") {
+    url = `${process.env.NEXT_PUBLIC_BASE_URL}/api/appointment?user=${id}`;
   } else {
-    url = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/appointment?doctor=${id}`
-    );
+    url = `${process.env.NEXT_PUBLIC_BASE_URL}/api/appointment?request=${id}`;
   }
-  let appointment = fetch(url , {
-    cache : "no-cache"
-  })
-  appointment = await appointment.json()
-  return appointment
+  let appointments = await fetch(url, {
+    cache: "no-cache",
+  });
+  appointments = await appointments.json();
+  return appointments;
 }

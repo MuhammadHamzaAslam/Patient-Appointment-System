@@ -2,10 +2,8 @@ import ApplyForm from "@/components/ApplyForm";
 import { auth } from "../../../../auth";
 
 export default async function DoctorApplyForm() {
-  const session = await auth()
-  console.log("session in apply form" , session);
-  
-  
+  const session = await auth();
+
   return (
     <section className="my-5 mx-7">
       <div className="mb-10">

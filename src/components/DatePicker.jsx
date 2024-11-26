@@ -17,7 +17,7 @@ import { useToast } from "@/hooks/use-toast";
 import { addAppointment } from "@/actions/appointment";
 
 export function DatePicker({ session, request }) {
-  console.log("session =>", session);
+  // console.log("session =>", session);
 
   const { toast } = useToast();
   const [date, setDate] = React.useState(Date.now());

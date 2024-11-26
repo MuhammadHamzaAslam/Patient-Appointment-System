@@ -2,20 +2,24 @@ import { AppointmentModal } from "@/lib/models/appointmentModal";
 import connectDB from "../../../lib/connectDB";
 import { UserModal } from "@/lib/models/userModal";
 
-export async function GET() {
+export async function GET(request) {
   await connectDB();
   const query = {};
-  const doctor = req?.nextUrl?.searchParams?.get("doctor");
-  const user = req?.nextUrl?.searchParams?.get("user");
+  const doctor = request.nextUrl.searchParams.get("doctor");
+  const user = request.nextUrl.searchParams.get("user");
   if (doctor) query.request = doctor;
   if (user) query.user = user;
-  let allAppointment = await AppointmentModal.find(query)
-    .populate("user")
-    .populate("request");
-  return Response.json({
-    appointment: allAppointment,
-    msg: "All Appointment Fetched",
-  });
+  const appointments = await AppointmentModal.find(query).populate("user").populate("request");
+  return Response.json(
+    {
+      error: false,
+      msg: "Appointment Fetched Successfully",
+      appointments,
+    },
+    {
+      status: 200,
+    }
+  );
 }
 
 export async function POST(request) {
