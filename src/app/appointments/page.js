@@ -1,6 +1,6 @@
 import { getAppointment } from "@/actions/appointment";
 import { auth } from "../../../auth";
-import { AppointmentCard } from "@/components/AppointmentCards";
+import AppointmentCard from "@/components/AppointmentCards";
 
 export default async function YourAppointments() {
   const session = await auth();
@@ -13,27 +13,15 @@ export default async function YourAppointments() {
     return <h1>No Appointments Found</h1>;
   }
 
-  const handleAccept = (id) => {
-    console.log(`Accepted appointment with id: ${id}`);
-  };
-
-  const handleCancel = (id) => {
-    console.log(`Cancelled appointment with id: ${id}`);
-  };
-
   return (
-    <div>
-      <h1>Your Appointments</h1>
-      {/* <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-        {response.map((appointment) => (
-          <AppointmentCard
-            key={appointment._id}
-            appointment={appointment}
-            onAccept={handleAccept}
-            onCancel={handleCancel}
-          />
+    <div className="p-4 space-y-4">
+      <h1 className="text-2xl font-bold">Your Appointments</h1>
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        {/* Call AppointmentCard inside map */}
+        {response?.appointments?.map((appointment) => (
+          <AppointmentCard key={appointment._id} appointment={appointment} />
         ))}
-      </div> */}
+      </div>
     </div>
   );
 }

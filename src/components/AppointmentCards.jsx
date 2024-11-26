@@ -1,83 +1,66 @@
-"use client";
-
-import { useState } from "react";
+import React from "react";
 import Image from "next/image";
-import { format } from "date-fns";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-} from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Clock, MapPin } from "lucide-react";
 
-export function AppointmentCard({ appointment, onAccept, onCancel }) {
-  const [status, setStatus] = useState(appointment.status);
-
-  const handleAccept = () => {
-    onAccept(appointment._id);
-    setStatus("accepted");
-  };
-
-  const handleCancel = () => {
-    onCancel(appointment._id);
-  };
+const AppointmentCard = ({ appointment }) => {
+  const { user, status, request, date } = appointment;
 
   return (
-    <Card className="w-full max-w-md mx-auto">
-      <CardHeader className="flex flex-col sm:flex-row items-center gap-4">
-        <div className="relative w-24 h-24 rounded-full overflow-hidden">
-          <Image
-            src={appointment.user.picture}
-            alt={`${appointment.user.firstName} ${appointment.user.lastName}`}
-            layout="fill"
-            objectFit="cover"
-          />
+    <div className="max-w-md p-4 bg-white border rounded-md shadow-sm">
+      {/* Doctor Info */}
+      <div className="flex items-center space-x-4">
+        <Image
+          src={user.picture}
+          alt={`${user.firstName} ${user.lastName}`}
+          width={50}
+          height={50}
+          className="rounded-full"
+        />
+        <div>
+          <h2 className="text-lg font-semibold">{`Dr. ${user.firstName} ${user.lastName}`}</h2>
+          <p className="text-sm text-gray-500">{request.specialization}</p>
         </div>
-        <div className="text-center sm:text-left">
-          <h2 className="text-2xl font-bold">{`Dr. ${appointment.user.firstName} ${appointment.user.lastName}`}</h2>
-          <p className="text-muted-foreground">
-            {appointment.request.specialization}
-          </p>
-          <Badge
-            variant={status === "accepted" ? "default" : "secondary"}
-            className="mt-2"
-          >
-            {status.charAt(0).toUpperCase() + status.slice(1)}
-          </Badge>
-        </div>
-      </CardHeader>
-      <CardContent className="space-y-4">
-        <div className="flex items-center gap-2">
-          <MapPin className="text-muted-foreground" size={18} />
-          <span>{appointment.request.hospital}</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <Clock className="text-muted-foreground" size={18} />
-          <span>{`${appointment.request.appointmentStartTime} - ${appointment.request.appointmentEndTime}`}</span>
-        </div>
-        <div className="font-semibold">
-          {format(new Date(appointment.date), "EEEE, MMMM d, yyyy")}
-        </div>
-      </CardContent>
-      <CardFooter className="flex justify-between">
-        <Button
-          variant="destructive"
-          onClick={handleCancel}
-          disabled={status === "accepted"}
-        >
+      </div>
+
+      {/* Appointment Status */}
+      <p
+        className={`mt-2 px-2 py-1 text-sm text-white inline-block rounded ${
+          status === "pending" ? "bg-yellow-500" : "bg-green-500"
+        }`}
+      >
+        {status}
+      </p>
+
+      {/* Hospital & Timing Info */}
+      <div className="mt-4 text-sm">
+        <p>
+          <span className="font-semibold">📍 {request.hospital} Hospital</span>
+        </p>
+        <p>
+          <span className="font-semibold">🕒</span>{" "}
+          {request.appointmentStartTime} - {request.appointmentEndTime}
+        </p>
+        <p>
+          <span className="font-semibold">📅</span>{" "}
+          {new Date(date).toLocaleDateString("en-US", {
+            weekday: "long",
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          })}
+        </p>
+      </div>
+
+      {/* Actions */}
+      <div className="mt-4 flex space-x-2">
+        <button className="px-4 py-2 text-sm text-white bg-red-500 rounded hover:bg-red-600">
           Cancel
-        </Button>
-        <Button
-          variant="default"
-          onClick={handleAccept}
-          disabled={status === "accepted"}
-        >
+        </button>
+        <button className="px-4 py-2 text-sm text-white bg-green-500 rounded hover:bg-green-600">
           Accept
-        </Button>
-      </CardFooter>
-    </Card>
+        </button>
+      </div>
+    </div>
   );
-}
+};
+
+export default AppointmentCard;
