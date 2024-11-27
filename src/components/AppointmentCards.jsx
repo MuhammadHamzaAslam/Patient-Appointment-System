@@ -1,66 +1,125 @@
 import React from "react";
-import Image from "next/image";
-
-const AppointmentCard = ({ appointment }) => {
-  const { user, status, request, date } = appointment;
-
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardFooter,
+} from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { CalendarIcon, ClockIcon, HospitalIcon, UserIcon } from "lucide-react";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+dayjs.extend(relativeTime);
+function AppointmentCards({ appointments }) {
   return (
-    <div className="max-w-md p-4 bg-white border rounded-md shadow-sm">
-      {/* Doctor Info */}
-      <div className="flex items-center space-x-4">
-        <Image
-          src={user.picture}
-          alt={`${user.firstName} ${user.lastName}`}
-          width={50}
-          height={50}
-          className="rounded-full"
-        />
-        <div>
-          <h2 className="text-lg font-semibold">{`Dr. ${user.firstName} ${user.lastName}`}</h2>
-          <p className="text-sm text-gray-500">{request.specialization}</p>
-        </div>
-      </div>
+    <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {appointments?.appointments?.map((appointment) => (
+        <Card
+          key={appointment._id}
+          className="shadow-md hover:shadow-lg transition-shadow overflow-hidden"
+        >
+          <CardHeader className="bg-primary/10 p-4">
+            <CardTitle className="text-lg font-semibold">
+              Appointment Details
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="p-4 space-y-6">
+            {/* Doctor Info */}
+            <div className="flex items-center space-x-4">
+              <Avatar className="w-14 h-14">
+                <AvatarImage
+                  src={appointment.request.user.picture}
+                  alt={`${appointment.request.user.firstName} ${appointment.request.user.lastName}`}
+                />
+                <AvatarFallback>
+                  {appointment.request.user.firstName[0]}
+                  {appointment.request.user.lastName[0]}
+                </AvatarFallback>
+              </Avatar>
+              <div>
+                <p className="text-sm font-medium text-muted-foreground">
+                  Doctor
+                </p>
+                <p className="font-medium">
+                  Dr. {appointment.request.user.firstName}{" "}
+                  {appointment.request.user.lastName}
+                </p>
+                <p className="text-xs text-muted-foreground">
+                  {appointment.request.specialization}
+                </p>
+              </div>
+            </div>
 
-      {/* Appointment Status */}
-      <p
-        className={`mt-2 px-2 py-1 text-sm text-white inline-block rounded ${
-          status === "pending" ? "bg-yellow-500" : "bg-green-500"
-        }`}
-      >
-        {status}
-      </p>
+            {/* Patient Info */}
+            <div className="flex items-center space-x-2">
+              <UserIcon className="w-5 h-5 text-muted-foreground" />
+              <div>
+                <p className="text-sm font-medium">Patient</p>
+                <p className="text-sm text-muted-foreground">
+                  {appointment.user.firstName} {appointment.user.lastName}
+                </p>
+              </div>
+            </div>
 
-      {/* Hospital & Timing Info */}
-      <div className="mt-4 text-sm">
-        <p>
-          <span className="font-semibold">📍 {request.hospital} Hospital</span>
-        </p>
-        <p>
-          <span className="font-semibold">🕒</span>{" "}
-          {request.appointmentStartTime} - {request.appointmentEndTime}
-        </p>
-        <p>
-          <span className="font-semibold">📅</span>{" "}
-          {new Date(date).toLocaleDateString("en-US", {
-            weekday: "long",
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-          })}
-        </p>
-      </div>
+            {/* Hospital Info */}
+            <div className="flex items-center space-x-2">
+              <HospitalIcon className="w-5 h-5 text-muted-foreground" />
+              <div>
+                <p className="text-sm font-medium">Hospital</p>
+                <p className="text-sm text-muted-foreground">
+                  {appointment.request.hospital}
+                </p>
+              </div>
+            </div>
 
-      {/* Actions */}
-      <div className="mt-4 flex space-x-2">
-        <button className="px-4 py-2 text-sm text-white bg-red-500 rounded hover:bg-red-600">
-          Cancel
-        </button>
-        <button className="px-4 py-2 text-sm text-white bg-green-500 rounded hover:bg-green-600">
-          Accept
-        </button>
-      </div>
+            {/* Date Info */}
+            <div className="flex items-center space-x-2">
+              <CalendarIcon className="w-5 h-5 text-muted-foreground" />
+              <div>
+                <p className="text-sm font-medium">Date</p>
+                <p className="text-sm text-muted-foreground">
+                  {/* {new Date(appointment.date).toLocaleDateString("en-US", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  })} */}
+                  {dayjs(new Date(appointment.date)).fromNow() +
+                    " " +
+                    dayjs(new Date(appointment.date)).format("dddd DD MMMM")}
+                </p>
+              </div>
+            </div>
+
+            {/* Time Info */}
+            <div className="flex items-center space-x-2">
+              <ClockIcon className="w-5 h-5 text-muted-foreground" />
+              <div>
+                <p className="text-sm font-medium">Time</p>
+                <p className="text-sm text-muted-foreground">
+                  {appointment.request.appointmentStartTime} -{" "}
+                  {appointment.request.appointmentEndTime}
+                </p>
+              </div>
+            </div>
+          </CardContent>
+
+          {/* Card Footer for Status */}
+          <CardFooter className="p-4 bg-muted/10 flex justify-end">
+            <Badge
+              variant={
+                appointment.status === "pending" ? "secondary" : "default"
+              }
+              className="capitalize"
+            >
+              {appointment.status}
+            </Badge>
+          </CardFooter>
+        </Card>
+      ))}
     </div>
   );
-};
+}
 
-export default AppointmentCard;
+export default AppointmentCards;

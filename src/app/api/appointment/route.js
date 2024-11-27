@@ -9,7 +9,12 @@ export async function GET(request) {
   const user = request.nextUrl.searchParams.get("user");
   if (doctor) query.request = doctor;
   if (user) query.user = user;
-  const appointments = await AppointmentModal.find(query).populate("user").populate("request");
+  const appointments = await AppointmentModal.find(query)
+    .populate("user")
+    .populate({
+      path : "request", 
+      populate : {path : "user"}
+    });
   return Response.json(
     {
       error: false,
