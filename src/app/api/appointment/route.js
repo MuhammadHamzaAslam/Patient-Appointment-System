@@ -1,19 +1,23 @@
 import { AppointmentModal } from "@/lib/models/appointmentModal";
 import connectDB from "../../../lib/connectDB";
 import { UserModal } from "@/lib/models/userModal";
+import { RequestModal } from "@/lib/models/requestModal";
 
 export async function GET(request) {
   await connectDB();
   const query = {};
   const doctor = request.nextUrl.searchParams.get("doctor");
   const user = request.nextUrl.searchParams.get("user");
-  if (doctor) query.request = doctor;
+  if (doctor) {
+    const doctorRequest = await RequestModal.findOne({ user: doctor });
+    query.request = doctorRequest
+  }
   if (user) query.user = user;
   const appointments = await AppointmentModal.find(query)
     .populate("user")
     .populate({
-      path : "request", 
-      populate : {path : "user"}
+      path: "request",
+      populate: { path: "user" },
     });
   return Response.json(
     {
