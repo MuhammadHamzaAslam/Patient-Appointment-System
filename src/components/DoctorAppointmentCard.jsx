@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import {
   Card,
@@ -8,15 +9,33 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { CalendarIcon, ClockIcon, HospitalIcon, UserIcon } from "lucide-react";
+import {
+  BadgeCheck,
+  BadgeX,
+  CalendarIcon,
+  ClockIcon,
+  HospitalIcon,
+  UserIcon,
+} from "lucide-react";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import { updateAppointment } from "@/actions/appointment";
 dayjs.extend(relativeTime);
 function DoctorAppointmentCard({ appointments }) {
+  const handleAccept = async (id) => {
+    await updateAppointment(id, "accepted");
+  };
+
+  const handleReject = async (id) => {
+    await updateAppointment(id, "cancelled");
+  };
+
   return (
     <div>
       <div>
-        <h1 className="text-2xl font-bold mb-6">Doctor Appointments</h1>
+        <h1 className="text-2xl font-bold mb-6">
+          Your Appointments To These Patient
+        </h1>
       </div>
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {appointments?.appointments?.map((appointment) => (
@@ -81,11 +100,6 @@ function DoctorAppointmentCard({ appointments }) {
                 <div>
                   <p className="text-sm font-medium">Date</p>
                   <p className="text-sm text-muted-foreground">
-                    {/* {new Date(appointment.date).toLocaleDateString("en-US", {
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                  })} */}
                     {dayjs(new Date(appointment.date)).fromNow() +
                       " " +
                       dayjs(new Date(appointment.date)).format("dddd DD MMMM")}
@@ -106,16 +120,32 @@ function DoctorAppointmentCard({ appointments }) {
               </div>
             </CardContent>
 
-            {/* Card Footer for Status */}
-            <CardFooter className="p-4 bg-muted/10 flex justify-end">
+            <CardFooter className="p-4 bg-muted/10 flex justify-between items-center">
               <Badge
                 variant={
                   appointment.status === "pending" ? "secondary" : "default"
                 }
-                className="capitalize"
+                className="capitalize py-2"
               >
                 {appointment.status}
               </Badge>
+              {appointment.status === "pending" ? (
+                <div className="flex space-x-2">
+                  <button
+                    onClick={() => handleAccept(appointment._id)}
+                    className="flex items-center px-5 py-2 bg-green-500 text-white rounded hover:bg-green-600 focus:outline-none"
+                  >
+                    <BadgeCheck />
+                  </button>
+
+                  <button
+                    onClick={() => handleReject(appointment._id)}
+                    className="flex items-center px-5 py-2 bg-red-500 text-white rounded hover:bg-red-600 focus:outline-none"
+                  >
+                    <BadgeX />
+                  </button>
+                </div>
+              ) : null}
             </CardFooter>
           </Card>
         ))}

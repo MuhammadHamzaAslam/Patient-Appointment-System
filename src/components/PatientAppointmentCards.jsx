@@ -16,7 +16,7 @@ function PatientAppointmentCards({ appointments }) {
   return (
     <div>
       <div>
-        <h1 className="text-2xl font-bold mb-6">Patient Appointments</h1>
+        <h1 className="text-2xl font-bold mb-6">Your Appointments To These Doctor</h1>
       </div>
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {appointments?.appointments?.map((appointment) => (
@@ -115,7 +115,7 @@ function PatientAppointmentCards({ appointments }) {
                 variant={
                   appointment.status === "pending" ? "secondary" : "default"
                 }
-                className="capitalize"
+                className="capitalize py-2"
               >
                 {appointment.status}
               </Badge>

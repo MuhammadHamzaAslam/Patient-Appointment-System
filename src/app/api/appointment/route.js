@@ -10,7 +10,7 @@ export async function GET(request) {
   const user = request.nextUrl.searchParams.get("user");
   if (doctor) {
     const doctorRequest = await RequestModal.findOne({ user: doctor });
-    query.request = doctorRequest
+    query.request = doctorRequest;
   }
   if (user) query.user = user;
   const appointments = await AppointmentModal.find(query)
@@ -47,5 +47,36 @@ export async function POST(request) {
     );
   } catch (error) {
     console.log(error);
+  }
+}
+
+export async function PUT(request) {
+  await connectDB();
+  try {
+    let { id, status } = await request.json();
+    const update = await AppointmentModal.findOneAndUpdate(
+      { _id: id },
+      {
+        status: status,
+      }
+    ).exec();
+    return Response.json(
+      {
+        error: false,
+        msg: "Appointment Update Successfully",
+        appointment: update,
+      },
+      { status: 201 }
+    );
+  } catch (error) {
+    return Response.json(
+      {
+        error: true,
+        msg: "Error In Update The Appointment",
+      },
+      {
+        status: 500,
+      }
+    );
   }
 }

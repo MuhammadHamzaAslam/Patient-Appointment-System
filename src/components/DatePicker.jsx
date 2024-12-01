@@ -37,7 +37,7 @@ export function DatePicker({ session, request }) {
     };
     const response = await addAppointment(obj);
     toast({
-      variant: "success",
+      variant: "Success",
       title: "Appointment Booked",
       description: "You will receive a confirmation msg soon.",
     });
