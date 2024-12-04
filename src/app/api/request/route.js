@@ -11,13 +11,8 @@ export async function GET(req) {
       query.status = status;
     }
 
-    console.log("query in get api" , query);
-    console.log("status in get api" , status);
-    
-    
     const allUser = await RequestModal.find(query).populate("user");
-    console.log("allUser in get api" , allUser);
-    
+
     return Response.json({
       allUser,
       msg: "All Request Fetched",
@@ -82,7 +77,7 @@ export async function PUT(request) {
   try {
     const obj = await request.json();
     const { status, id } = obj;
-    
+
     const requestDoc = await RequestModal.findOne({ _id: id });
 
     if (!requestDoc) {

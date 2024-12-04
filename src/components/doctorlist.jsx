@@ -6,8 +6,6 @@ import Image from "next/image";
 
 export default async function DoctorList({ isHome }) {
   const data = await getRequest("accepted");
-  console.log("all doctor in doctor list" , data);
-  
 
   return (
     <section className="py-12 md:py-24 bg-gray-50">
