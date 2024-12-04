@@ -25,7 +25,8 @@ export async function getRequest(status) {
       status ? status : ""
     }`
   );
-
+  console.log("process.env.NEXT_PUBLIC_BASE_URL in get requset =>" , process.env.NEXT_PUBLIC_BASE_URL);
+  
   add = await add.json();
   return add.allUser;
 }
