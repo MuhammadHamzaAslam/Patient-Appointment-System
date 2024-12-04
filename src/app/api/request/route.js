@@ -11,8 +11,13 @@ export async function GET(req) {
       query.status = status;
     }
 
+    console.log("query in get api" , query);
+    console.log("status in get api" , status);
+    
+    
     const allUser = await RequestModal.find(query).populate("user");
-
+    console.log("allUser in get api" , allUser);
+    
     return Response.json({
       allUser,
       msg: "All Request Fetched",
